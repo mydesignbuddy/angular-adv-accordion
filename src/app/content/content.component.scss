@@ -1,0 +1,11 @@
+.content-desktop {
+  display: flex;
+  flex-direction: row;
+  nav {
+    flex: 1;
+  }
+  section {
+    flex: 5;
+    background-color: #eee;
+  }
+}

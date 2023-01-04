@@ -1,0 +1,51 @@
+<pre>
+  currentBreakpoint: {{ currentBreakpoint }}
+  currentHeaderIndex: {{ currentHeaderIndex }}
+</pre>
+
+<ng-container [ngSwitch]="currentBreakpoint">
+  <div *ngSwitchCase="'desktop'" class="content-desktop">
+    <nav>
+      <mat-selection-list
+        #listOfHeaders
+        [multiple]="false"
+        (selectionChange)="headerChanged($event, listOfHeaders.selectedOptions)"
+      >
+        <mat-list-option
+          *ngFor="let header of headers"
+          [value]="header"
+          [selected]="header === headers[currentHeaderIndex]"
+        >
+          {{header}}
+        </mat-list-option>
+      </mat-selection-list>
+    </nav>
+    <section [ngSwitch]="currentHeaderIndex">
+      <app-content-one *ngSwitchCase="0"></app-content-one>
+      <app-content-two *ngSwitchCase="1"></app-content-two>
+      <app-content-three *ngSwitchCase="2"></app-content-three>
+    </section>
+  </div>
+
+  <mat-accordion #accordionMobile *ngSwitchCase="'mobile'">
+    <mat-expansion-panel [expanded]="currentHeaderIndex === 0">
+      <mat-expansion-panel-header (click)="accordionChanged(0)">
+        <mat-panel-title>{{ headers[0] }}</mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-content-one></app-content-one>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="currentHeaderIndex === 1">
+      <mat-expansion-panel-header (click)="accordionChanged(1)">
+        <mat-panel-title>{{ headers[1] }}</mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-content-two></app-content-two>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="currentHeaderIndex === 2">
+      <mat-expansion-panel-header (click)="accordionChanged(2)">
+        <mat-panel-title>{{ headers[2] }}</mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-content-three></app-content-three>
+    </mat-expansion-panel>
+  </mat-accordion>
+</ng-container>
+
